@@ -32,30 +32,25 @@ public class Kiosk {
 
             Menu menu = menus.get(inputMenuNum-1);
             List<MenuItem> menuItems = menu.getMenuItems();
+            while (true) {
+                System.out.println("[ " + menu.getCategory().toUpperCase() + " MENU ]");
+                menu.showMenuItems();
+                System.out.println("0. 뒤로가기");
 
-            showMenuItems(menu, menuItems);
+                int inputMenuItemNum = inputNumber(scanner);
 
-            int inputMenuItemNum = inputNumber(scanner);
+                if (inputMenuItemNum == 0) {
+                    break;
+                }
 
-            if (inputMenuItemNum == 0) {
-                continue;
+                if (inputMenuItemNum > menuItems.size()) {
+                    throw new IllegalArgumentException("메뉴에 있는 숫자만 입력가능합니다.");
+                }
+
+                printResult(menuItems.get(inputMenuItemNum-1));
             }
 
-            if (inputMenuItemNum > menuItems.size()) {
-                throw new IllegalArgumentException("메뉴에 있는 숫자만 입력가능합니다.");
-            }
-
-            printResult(menuItems.get(inputMenuItemNum-1));
-
         }
-    }
-
-    private static void showMenuItems(Menu menu, List<MenuItem> menuItems) {
-        System.out.println("[ " + menu.getCategory().toUpperCase() + " MENU ]");
-        for (MenuItem menuItem : menuItems) {
-            menuItem.showMenuItem();
-        }
-        System.out.println("0. 뒤로가기");
     }
 
     private void showMenus() {

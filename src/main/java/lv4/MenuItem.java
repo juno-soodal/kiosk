@@ -1,10 +1,10 @@
 package lv4;
 
 public class MenuItem {
-    private Long id;
-    private String menuName;
-    private Double price;
-    private String description;
+    private final Long id;
+    private final String menuName;
+    private final Double price;
+    private final String description;
 
     public MenuItem(Long id, String menuName, Double price, String description) {
         this.id = id;
