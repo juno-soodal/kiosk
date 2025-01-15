@@ -47,12 +47,19 @@ public class KioskService {
                 return;
             }
 
+
             if (inputMainMenuNum == ORDER_NUMBER) {
+                if (cart.totalCount() == 0) {
+                    throw new IllegalArgumentException("장바구니가 비어있습니다.");
+                }
                 handleOrderMenuClick();
                 continue;
             }
 
             if (inputMainMenuNum == CANCEL_NUMBER) {
+                if (cart.totalCount() == 0) {
+                    throw new IllegalArgumentException("장바구니가 비어있습니다.");
+                }
                 handleCancelMenuClick();
                 continue;
             }
