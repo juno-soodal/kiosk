@@ -1,0 +1,56 @@
+package lv6.ui;
+
+import lv6.cart.Cart;
+import lv6.menu.Category;
+import lv6.menu.Menu;
+import lv6.menu.MenuItem;
+
+public abstract class KioskUi {
+    public static void displayMain() {
+        Category[] values = Category.values();
+        System.out.println("[ MAIN MENU ]");
+        for (int i = 0; i < values.length; i++) {
+            System.out.printf("%d. %s\n", i + 1, values[i]);
+        }
+        System.out.printf("%d. %-10s | %s%n", 0, "종료", "종료");
+    }
+
+    public static void displayOrderMenu() {
+        System.out.println("[ ORDER MENU ]");
+        System.out.printf("%d. %-10s | %s%n", 4, "Orders", "장바구니를 확인 후 주문합니다.");
+        System.out.printf("%d. %-10s | %s%n", 5, "Cancel", "진행중인 주문을 취소합니다.");
+    }
+
+
+    public static void displayOrderSummary(Cart cart) {
+        System.out.println("[ Orders ]");
+        cart.showCart();
+        System.out.println();
+        System.out.println("[ Total ]");
+        System.out.println("W " + cart.totalPrice());
+        System.out.println();
+        System.out.println("1. 확인        2. 취소");
+    }
+
+    public static void displayCancelMenu(Cart cart) {
+        cart.showCart();
+        System.out.println("진행중인 주문을 취소하시겠습니까?");
+        System.out.println("1. 확인        2. 취소");
+    }
+
+    public static void displayAddToCartConfirm() {
+        System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
+        System.out.println("1. 확인        2. 취소");
+    }
+
+    public static void displaySelectedMenuInfo(MenuItem menuItem) {
+        String split = ", ";
+        System.out.println("선택한 메뉴 : " + menuItem.getMenuName() + split + menuItem.getPrice() + split + menuItem.getDescription());
+    }
+
+    public static void displayMenuItems(Menu menu) {
+        System.out.println("[ " + menu.getCategory().name() + " MENU ]");
+        menu.showMenuItems();
+        System.out.println("0. 뒤로가기");
+    }
+}
