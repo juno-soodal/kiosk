@@ -4,22 +4,24 @@ import lv6.cart.Cart;
 import lv6.menu.Category;
 import lv6.menu.Menu;
 import lv6.menu.MenuItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Scanner;
 
+import static lv6.service.Discount.calculateDiscount;
 import static lv6.ui.KioskUi.*;
-import static lv6.validation.MenuInputValidator.inputNumber;
+import static lv6.validation.MenuInputValidator.getValidNumberInput;
 import static lv6.validation.MenuInputValidator.validateNumberRange;
 
 public class KioskService {
-
+    private static final Logger log = LoggerFactory.getLogger(KioskService.class);
 
     private final List<Menu> menus;
     private final Cart cart;
 
     private static final int CATEGORY_COUNT = Category.values().length;
-    private static final int VALID_INPUT_RANGE = CATEGORY_COUNT + 2;
     private static final int ORDER_NUMBER = CATEGORY_COUNT + 1;
     private static final int CANCEL_NUMBER = CATEGORY_COUNT + 2;
     private static final Scanner scanner = new Scanner(System.in);
@@ -39,11 +41,11 @@ public class KioskService {
                 displayOrderMenu();
             }
 
-            int inputMainMenuNum = inputNumber(scanner);
-            validateNumberRange(inputMainMenuNum, 0, VALID_INPUT_RANGE);
+            int inputMainMenuNum = getValidNumberInput(scanner, 0, getMainMenuInputRange());
 
             if (inputMainMenuNum == 0) {
-                System.out.println("프로그램을 종료합니다.");
+                scanner.close();
+                log.info("프로그램을 종료합니다.");
                 return;
             }
 
@@ -57,6 +59,7 @@ public class KioskService {
                 continue;
             }
 
+
             handleCategoryMenuClick(inputMainMenuNum - 1);
 
         }
@@ -67,14 +70,12 @@ public class KioskService {
         while (true) {
             displayMenuItems(findMenu);
 
-            int inputMenuItemNum = inputNumber(scanner);
-            validateNumberRange(inputMenuItemNum, 0, findMenu.getMenuItemsCount());
-
+            int inputMenuItemNum = getValidNumberInput(scanner, 0, findMenu.getMenuItemsCount());
             //뒤로가기
             if (inputMenuItemNum == 0) {
                 break;
             }
-            MenuItem selectedMenuItem = findMenu.getMenuItemByInput(inputMenuItemNum);
+            MenuItem selectedMenuItem = findMenu.getMenuItemByInput(inputMenuItemNum - 1);
             handleMenuItemClick(selectedMenuItem);
         }
 
@@ -85,7 +86,7 @@ public class KioskService {
         displaySelectedMenuInfo(menuItem);
         displayAddToCartConfirm();
 
-        int inputCartNum = inputNumber(scanner);
+        int inputCartNum = getValidNumberInput(scanner, 1, 2);
         validateNumberRange(inputCartNum, 1, 2);
 
         if (inputCartNum == 1) {
@@ -95,8 +96,7 @@ public class KioskService {
 
     private void handleCancelMenuClick() {
         displayCancelMenu(cart);
-        int inputCancelNum = inputNumber(scanner);
-        validateNumberRange(inputCancelNum, 1, 2);
+        int inputCancelNum = getValidNumberInput(scanner, 1, 2);
         if (inputCancelNum == 1) {
             cart.clearCart();
         }
@@ -105,21 +105,31 @@ public class KioskService {
     private void handleOrderMenuClick() {
         displayOrderSummary(cart);
 
-        int inputOrderNum = inputNumber(scanner);
-        validateNumberRange(inputOrderNum, 1, 2);
+        int inputOrderNum = getValidNumberInput(scanner, 1, 2);
         if (inputOrderNum == 1) {
             //order
-            order();
+            displayDiscountInfo();
+            handleDiscountClick();
         }
     }
 
-    private void order() {
-        System.out.println("주문이 완료되었습니다. 금액은 W" + cart.totalPrice() + "입니다.");
+    private void handleDiscountClick() {
+        int inputDiscountNum = getValidNumberInput(scanner, 1, Discount.values().length);
+        Discount discount = Discount.getDiscount(inputDiscountNum);
+        double totalPrice = cart.totalPrice() - calculateDiscount(discount, cart.totalPrice());
+        System.out.println("주문이 완료되었습니다. 금액은 W" + totalPrice + "입니다.");
         cart.clearCart();
     }
 
 
     public boolean canShowOrderMenu() {
         return cart.totalCount() > 0;
+    }
+
+    private int getMainMenuInputRange() {
+        if (cart.totalCount() > 0) {
+            return CATEGORY_COUNT + 2;
+        }
+        return CATEGORY_COUNT;
     }
 }

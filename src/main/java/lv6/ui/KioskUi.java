@@ -4,14 +4,15 @@ import lv6.cart.Cart;
 import lv6.menu.Category;
 import lv6.menu.Menu;
 import lv6.menu.MenuItem;
+import lv6.service.Discount;
+
+import java.util.Arrays;
 
 public abstract class KioskUi {
     public static void displayMain() {
-        Category[] values = Category.values();
         System.out.println("[ MAIN MENU ]");
-        for (int i = 0; i < values.length; i++) {
-            System.out.printf("%d. %s\n", i + 1, values[i]);
-        }
+        Arrays.stream(Category.values())
+                .forEach(category -> System.out.printf("%d. %s\n",category.ordinal()+1 , category.name()));
         System.out.printf("%d. %-10s | %s%n", 0, "종료", "종료");
     }
 
@@ -52,5 +53,12 @@ public abstract class KioskUi {
         System.out.println("[ " + menu.getCategory().name() + " MENU ]");
         menu.showMenuItems();
         System.out.println("0. 뒤로가기");
+    }
+
+    public static void displayDiscountInfo() {
+        System.out.println("할인 정보를 입력해주세요.");
+        Arrays.stream(Discount.values())
+                .forEach(discount -> System.out.printf("%d. %-10s : %s%n", discount.ordinal()+1, discount.getDescription(), discount.getDiscountRate()+"%"));
+
     }
 }
