@@ -36,4 +36,13 @@ public class MenuItem {
     public int hashCode() {
         return Objects.hash(menuName, price, description);
     }
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "menuName='" + menuName + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

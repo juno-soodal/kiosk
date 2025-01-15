@@ -43,9 +43,7 @@ public class Menu {
     }
 
     public void showMenuItems() {
-        for (MenuItem menuItem : menuItems) {
-            System.out.printf("%d. %-15s | %c %.1f | %s%n",menuItems.indexOf(menuItem) + 1, menuItem.getMenuName(), 'W', menuItem.getPrice(), menuItem.getDescription());
-        }
+        menuItems.forEach(menuItem -> System.out.printf("%d. %-15s | %c %.1f | %s%n",menuItems.indexOf(menuItem) + 1, menuItem.getMenuName(), 'W', menuItem.getPrice(), menuItem.getDescription()));
     }
 
     public int getMenuItemsCount() {
