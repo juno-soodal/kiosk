@@ -90,7 +90,8 @@ public class KioskService {
         validateNumberRange(inputCartNum, 1, 2);
 
         if (inputCartNum == 1) {
-            cart.addCart(menuItem);
+            cart.addItemToCart(menuItem);
+            System.out.println(menuItem.getMenuName() + "이 장바구니에 추가되었습니다.");
         }
     }
 
@@ -113,12 +114,19 @@ public class KioskService {
         }
     }
 
+    //orderService
     private void handleDiscountClick() {
         int inputDiscountNum = getValidNumberInput(scanner, 1, Discount.values().length);
         Discount discount = Discount.getDiscount(inputDiscountNum);
-        double totalPrice = cart.totalPrice() - calculateDiscount(discount, cart.totalPrice());
-        System.out.println("주문이 완료되었습니다. 금액은 W" + totalPrice + "입니다.");
+        double totalPrice = getTotalPrice(discount);
+        displayOrderComplete(totalPrice);
         cart.clearCart();
+    }
+
+
+
+    private double getTotalPrice(Discount discount) {
+        return cart.totalPrice() - calculateDiscount(discount, cart.totalPrice());
     }
 
 

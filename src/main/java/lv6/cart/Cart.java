@@ -10,16 +10,13 @@ public class Cart {
     private static final Logger log = LoggerFactory.getLogger(Cart.class);
     private final Map<MenuItem, Integer> items = new HashMap<>();
 
-    public void addCart(MenuItem menuItem) {
+    public void addItemToCart(MenuItem menuItem) {
         items.put(menuItem, items.getOrDefault(menuItem, 0) + 1);
         log.debug("장바구니:{}",items);
-        System.out.println(menuItem.getMenuName() + "이 장바구니에 추가되었습니다.");
     }
 
-    public void showCart() {
-        items.forEach((menuItem, count) -> {
-            System.out.printf("%d. %-15s | %c %.1f | %s X %d %n", menuItem.getMenuName(), 'W', menuItem.getPrice(), menuItem.getDescription(), count);
-        });
+    public Map<MenuItem, Integer> getItems() {
+        return Map.copyOf(items);
     }
 
     public double totalPrice() {

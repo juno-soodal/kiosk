@@ -1,5 +1,7 @@
 package lv6.validation;
 
+import lv6.service.KioskService;
+import lv6.ui.KioskUi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import java.util.Scanner;
 public abstract class MenuInputValidator {
     private static final Logger log = LoggerFactory.getLogger(MenuInputValidator.class);
     public static int getValidNumberInput(Scanner scanner,int min, int max) {
+        System.out.println();
         int inputNum;
         while (true) {
             try {

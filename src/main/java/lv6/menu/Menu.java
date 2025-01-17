@@ -42,8 +42,8 @@ public class Menu {
         return category;
     }
 
-    public void showMenuItems() {
-        menuItems.forEach(menuItem -> System.out.printf("%d. %-15s | %c %.1f | %s%n",menuItems.indexOf(menuItem) + 1, menuItem.getMenuName(), 'W', menuItem.getPrice(), menuItem.getDescription()));
+    public List<MenuItem> getMenuItems() {
+        return new ArrayList<>(menuItems);
     }
 
     public int getMenuItemsCount() {

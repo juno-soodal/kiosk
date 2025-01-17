@@ -7,6 +7,8 @@ import lv6.menu.MenuItem;
 import lv6.service.Discount;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public abstract class KioskUi {
     public static void displayMain() {
@@ -25,7 +27,8 @@ public abstract class KioskUi {
 
     public static void displayOrderSummary(Cart cart) {
         System.out.println("[ Orders ]");
-        cart.showCart();
+        Map<MenuItem, Integer> items = cart.getItems();
+        showCartItems(items);
         System.out.println();
         System.out.println("[ Total ]");
         System.out.println("W " + cart.totalPrice());
@@ -33,8 +36,19 @@ public abstract class KioskUi {
         System.out.println("1. 확인        2. 취소");
     }
 
+    public static void displayOrderComplete(double totalPrice) {
+        System.out.println("주문이 완료되었습니다. 금액은 W" + totalPrice + "입니다.");
+    }
+
+    private static void showCartItems(Map<MenuItem, Integer> items) {
+        items.forEach((menuItem, count) -> {
+            System.out.printf("%-15s | %c %.1f | %s X %d %n", menuItem.getMenuName(), 'W', menuItem.getPrice(), menuItem.getDescription(), count);
+        });
+    }
+
     public static void displayCancelMenu(Cart cart) {
-        cart.showCart();
+        Map<MenuItem, Integer> items = cart.getItems();
+        showCartItems(items);
         System.out.println("진행중인 주문을 취소하시겠습니까?");
         System.out.println("1. 확인        2. 취소");
     }
@@ -51,8 +65,13 @@ public abstract class KioskUi {
 
     public static void displayMenuItems(Menu menu) {
         System.out.println("[ " + menu.getCategory().name() + " MENU ]");
-        menu.showMenuItems();
+        List<MenuItem> menuItems = menu.getMenuItems();
+        showMenuItems(menuItems);
         System.out.println("0. 뒤로가기");
+    }
+
+    private static void showMenuItems(List<MenuItem> menuItems) {
+        menuItems.forEach(menuItem -> System.out.printf("%d. %-15s | %c %.1f | %s%n",menuItems.indexOf(menuItem) + 1, menuItem.getMenuName(), 'W', menuItem.getPrice(), menuItem.getDescription()));
     }
 
     public static void displayDiscountInfo() {

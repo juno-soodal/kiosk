@@ -10,6 +10,7 @@ public class Main {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) {
 
+
         KioskService kioskService = new Config().kioskService();
         log.info("===키오스크 서비스 시작===");
         kioskService.start();
