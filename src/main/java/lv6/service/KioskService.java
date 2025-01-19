@@ -7,6 +7,7 @@ import lv6.menu.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -35,10 +36,15 @@ public class KioskService {
     public void start() {
 
         while (true) {
-            displayMain();
+            System.out.println("[ MAIN MENU ]");
+            Arrays.stream(Category.values())
+                    .forEach(category -> System.out.printf("%d. %s\n",category.ordinal()+1 , category.name()));
+            System.out.printf("%d. %-10s | %s%n", 0, "종료", "종료");
 
             if (canShowOrderMenu()) {
-                displayOrderMenu();
+                System.out.println("[ ORDER MENU ]");
+                System.out.printf("%d. %-10s | %s%n", ORDER_NUMBER, "Orders", "장바구니를 확인 후 주문합니다.");
+                System.out.printf("%d. %-10s | %s%n", CANCEL_NUMBER, "Cancel", "진행중인 주문을 취소합니다.");
             }
 
             int inputMainMenuNum = getValidNumberInput(scanner, 0, getMainMenuInputRange());

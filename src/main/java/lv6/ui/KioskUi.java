@@ -71,7 +71,6 @@ public abstract class KioskUi {
     }
 
     private static void showMenuItems(List<MenuItem> menuItems) {
-        menuItems.forEach(menuItem -> System.out.printf("%d. %-15s | %c %.1f | %s%n",menuItems.indexOf(menuItem) + 1, menuItem.getMenuName(), 'W', menuItem.getPrice(), menuItem.getDescription()));
     }
 
     public static void displayDiscountInfo() {

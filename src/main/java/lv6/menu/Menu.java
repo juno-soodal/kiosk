@@ -53,4 +53,5 @@ public class Menu {
     public MenuItem getMenuItemByInput(int inputNumber) {
         return menuItems.get(inputNumber);
     }
+
 }
