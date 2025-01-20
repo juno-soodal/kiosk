@@ -27,15 +27,13 @@
 
 - Config:Kiosk 실행하기 위해 필요한 인스턴스 생성
 - KioskService: 사용자 입력과 애플리케이션 로직을 처리하는 메인 서비스.
-- KioskUi: 디스플레이 출력 및 사용자 상호작용 관리.
 - Category: 키오스크 메뉴들의 카테고리 관리
 - Discount: 할인정보 관리
-- MenuInputValidator:사용자 입력 검증
+- InputValidator:사용자 입력 검증
 - Cart: 아이템 추가, 제거 및 표시와 같은 장바구니 작업 관리.
 - Menu: 메뉴 카테고리와 아이템을 표현.
 - MenuItem: 이름, 가격, 설명 등의 세부 정보를 가진 개별 메뉴 아이템.
 ```
-lv6
 ┣ cart
 ┃ ┗ Cart.java
 ┣ config
@@ -47,9 +45,7 @@ lv6
 ┣ service
 ┃ ┣ Discount.java
 ┃ ┗ KioskService.java
-┣ ui
-┃ ┗ KioskUi.java
 ┣ validation
-┃ ┗ MenuInputValidator.java
+┃ ┗ InputValidator.java
 ┗ Main.java
 ```
