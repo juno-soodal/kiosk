@@ -3,7 +3,10 @@ package lv7.validation;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public abstract class InputValidator {
+public final class InputValidator {
+
+    private InputValidator() {
+    }
     private static final Scanner scanner = new Scanner(System.in);
 
 
